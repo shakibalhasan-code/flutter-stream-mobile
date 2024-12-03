@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "740062630703",
+    "project_id": "flutter-stream-softs",
+    "storage_bucket": "flutter-stream-softs.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:740062630703:android:6aeb008b00d1a0682387da",
+        "android_client_info": {
+          "package_name": "com.softsventure.flutter_stream_mobile"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDYyYrMiOmV5rjv3QegFT7mCBcUN7SqPhM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
