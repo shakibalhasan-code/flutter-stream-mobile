@@ -39,6 +39,7 @@ dependencies:
   get: ^4.6.6
   hugeicons: ^0.0.7
   onesignal_flutter: ^5.2.7
+  carousel_slider: ^5.0.0
 
 
 dev_dependencies:

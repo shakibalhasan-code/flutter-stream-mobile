@@ -29,15 +29,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      scrollBehavior: const MaterialScrollBehavior().copyWith(
-        dragDevices: {
-          PointerDeviceKind.touch,
-          PointerDeviceKind.mouse,
-          PointerDeviceKind.stylus,
-          PointerDeviceKind.invertedStylus,
-          PointerDeviceKind.unknown
-        },
-      ),
+      scrollBehavior: const MaterialScrollBehavior(),
       debugShowCheckedModeBanner: false,
       initialRoute: '/splash', // Initial route
       theme: theme_data(),
