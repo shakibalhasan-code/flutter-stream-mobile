@@ -83,13 +83,16 @@ class HomeScreen extends StatelessWidget {
             title: 'Recent Videos',
             onPressed: () {},
           ),
-          ListView.builder(
-            physics: const NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            itemCount: 10,
-            itemBuilder: (context, index) {
-              return VideoItem();
-            },
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: ListView.builder(
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              itemCount: 10,
+              itemBuilder: (context, index) {
+                return VideoItem();
+              },
+            ),
           ),
         ],
       ),

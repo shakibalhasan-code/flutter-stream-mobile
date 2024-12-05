@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_stream_mobile/util/stylish/app_colors.dart';
-import 'package:flutter_stream_mobile/views/screens/home/tab_screen.dart';
+import 'package:flutter_stream_mobile/views/screens/tab/tab_screen.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_instance/get_instance.dart';
