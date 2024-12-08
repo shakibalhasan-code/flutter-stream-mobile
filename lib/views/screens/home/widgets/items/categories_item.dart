@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_stream_mobile/core/models/category_model.dart';
 import 'package:flutter_stream_mobile/views/widgets/image_widget.dart';
 
 class HomeCategoriesItem extends StatelessWidget {
-  const HomeCategoriesItem({super.key});
+  final CategoryModel categoryModel;
+  const HomeCategoriesItem({super.key, required this.categoryModel});
 
   @override
   Widget build(BuildContext context) {
@@ -16,9 +18,7 @@ class HomeCategoriesItem extends StatelessWidget {
           children: [
             ClipRRect(
                 borderRadius: BorderRadius.circular(15),
-                child: const UrlImageWidget(
-                    imageUrl:
-                        'https://s.studiobinder.com/wp-content/uploads/2022/11/Movie-Genres-Types-of-Movies-List-of-Genres-and-Categories-Featured.jpg')),
+                child: UrlImageWidget(imageUrl: categoryModel.image)),
             Positioned(
               left: 0,
               right: 0,
@@ -29,10 +29,10 @@ class HomeCategoriesItem extends StatelessWidget {
                     color: Colors.black.withOpacity(0.5),
                     borderRadius: BorderRadius.circular(15)),
                 child: Padding(
-                  padding: EdgeInsets.all(5),
+                  padding: const EdgeInsets.all(5),
                   child: Center(
                     child: Text(
-                      'Actions',
+                      categoryModel.name,
                       style: Theme.of(context).textTheme.titleSmall,
                     ),
                   ),

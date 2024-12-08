@@ -1,8 +1,9 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_stream_mobile/core/models/video_model.dart';
 import 'package:flutter_stream_mobile/views/screens/home/widgets/items/slider_item.dart';
 
-CarouselSlider slider_home(List<Map<String, dynamic>> items) {
+CarouselSlider slider_home(List<VideoModel> items) {
   return CarouselSlider(
     items: items.map((item) {
       return slider_item(item);

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_stream_mobile/core/models/video_model.dart';
 import 'package:flutter_stream_mobile/util/app_data/icons/icons.dart';
 import 'package:hugeicons/hugeicons.dart';
 
-Container slider_item(Map<String, dynamic> item) {
+Container slider_item(VideoModel item) {
   return Container(
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(15),
@@ -13,7 +14,7 @@ Container slider_item(Map<String, dynamic> item) {
         ClipRRect(
           borderRadius: BorderRadius.circular(15),
           child: Image.network(
-            item['image'],
+            item.image,
             width: double.infinity,
             fit: BoxFit.cover,
             loadingBuilder: (context, child, loadingProgress) {
@@ -60,7 +61,7 @@ Container slider_item(Map<String, dynamic> item) {
           left: 10,
           right: 10,
           child: Text(
-            item['title'],
+            item.title,
             style: const TextStyle(
               color: Colors.white,
               fontSize: 18,

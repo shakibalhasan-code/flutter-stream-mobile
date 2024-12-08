@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_stream_mobile/core/models/video_model.dart';
 import 'package:hugeicons/hugeicons.dart';
 
 class VideoItem extends StatelessWidget {
-  const VideoItem({super.key});
+  final VideoModel videoModel;
+  const VideoItem({super.key, required this.videoModel});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +22,7 @@ class VideoItem extends StatelessWidget {
             ClipRRect(
               borderRadius: BorderRadius.circular(15),
               child: Image.network(
-                'https://images.thedirect.com/media/article_full/spid-blu-ray.jpg',
+                videoModel.image,
                 width: double.infinity,
                 fit: BoxFit.cover,
                 loadingBuilder: (context, child, loadingProgress) {
@@ -67,7 +69,7 @@ class VideoItem extends StatelessWidget {
               left: 10,
               right: 10,
               child: Text(
-                'Spider Man No Way Home',
+                videoModel.title,
                 style: const TextStyle(
                   color: Colors.white,
                   fontSize: 18,

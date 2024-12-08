@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_stream_mobile/getx/home/home_screen_state.dart';
 import 'package:flutter_stream_mobile/util/app_data/icons/icons.dart';
 import 'package:flutter_stream_mobile/util/stylish/app_colors.dart';
 import 'package:flutter_stream_mobile/views/screens/home/widgets/items/categories_item.dart';
@@ -7,6 +8,7 @@ import 'package:flutter_stream_mobile/views/screens/home/widgets/items/channel_i
 import 'package:flutter_stream_mobile/views/screens/home/widgets/items/slider_item.dart';
 import 'package:flutter_stream_mobile/views/screens/home/widgets/slider_widget_home.dart';
 import 'package:flutter_stream_mobile/views/widgets/items/video_item.dart';
+import 'package:get/get.dart';
 import 'package:hugeicons/hugeicons.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -14,21 +16,9 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<Map<String, dynamic>> items = [
-      {
-        'image':
-            'https://c4.wallpaperflare.com/wallpaper/810/33/235/movies-avatar-1680x1050-entertainment-movies-hd-art-wallpaper-preview.jpg',
-        'title': 'Avatar'
-      },
-      {
-        'image':
-            'https://images.thedirect.com/media/article_full/spider-man-no-way-home-posters.jpg',
-        'title': 'New Spider-Man: No Way Home'
-      },
-    ];
-
+    final HomeScreenState _homeScreenState = Get.put(HomeScreenState());
+    _homeScreenState.initializedAllData();
     final theme = Theme.of(context);
-    final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
     final isPortrait =
         MediaQuery.of(context).orientation == Orientation.portrait;
@@ -38,10 +28,21 @@ class HomeScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(height: screenHeight * 0.01),
-          SizedBox(
-            width: double.infinity,
-            height: isPortrait ? screenHeight * 0.25 : screenHeight * 0.4,
-            child: slider_home(items),
+          FutureBuilder(
+            future: _homeScreenState.getRecentVideos(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(child: CircularProgressIndicator());
+              } else if (snapshot.hasError) {
+                return Center(child: Text('Error: ${snapshot.error}'));
+              } else {
+                return SizedBox(
+                  width: double.infinity,
+                  height: isPortrait ? screenHeight * 0.25 : screenHeight * 0.4,
+                  child: slider_home(_homeScreenState.recentVideos),
+                );
+              }
+            },
           ),
           SizedBox(height: screenHeight * 0.01),
           _buildSectionHeader(
@@ -50,16 +51,29 @@ class HomeScreen extends StatelessWidget {
             title: 'Categories',
             onPressed: () {},
           ),
-          SizedBox(
-            height: screenHeight * 0.07,
-            child: ListView.builder(
-              padding: EdgeInsets.zero,
-              itemCount: 10,
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (context, i) {
-                return HomeCategoriesItem();
-              },
-            ),
+          FutureBuilder(
+            future: _homeScreenState.getAllCategories(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(child: CircularProgressIndicator());
+              } else if (snapshot.hasError) {
+                return Center(child: Text('Error: ${snapshot.error}'));
+              } else {
+                return SizedBox(
+                  height: screenHeight * 0.07,
+                  child: ListView.builder(
+                    padding: EdgeInsets.zero,
+                    itemCount: _homeScreenState.categories.length,
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, i) {
+                      return HomeCategoriesItem(
+                        categoryModel: _homeScreenState.categories[i],
+                      );
+                    },
+                  ),
+                );
+              }
+            },
           ),
           _buildSectionHeader(
             context,
@@ -67,15 +81,28 @@ class HomeScreen extends StatelessWidget {
             title: 'Recent Channels',
             onPressed: () {},
           ),
-          SizedBox(
-            height: screenHeight * 0.15,
-            child: ListView.builder(
-              itemCount: 10,
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) {
-                return ChannelItemHome();
-              },
-            ),
+          FutureBuilder(
+            future: _homeScreenState.getAllChannels(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(child: CircularProgressIndicator());
+              } else if (snapshot.hasError) {
+                return Center(child: Text('Error: ${snapshot.error}'));
+              } else {
+                return SizedBox(
+                  height: screenHeight * 0.15,
+                  child: ListView.builder(
+                    itemCount: _homeScreenState.channels.length,
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, index) {
+                      return ChannelItemHome(
+                        channelModel: _homeScreenState.channels[index],
+                      );
+                    },
+                  ),
+                );
+              }
+            },
           ),
           _buildSectionHeader(
             context,
@@ -83,16 +110,29 @@ class HomeScreen extends StatelessWidget {
             title: 'Recent Videos',
             onPressed: () {},
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: ListView.builder(
-              physics: const NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              itemCount: 10,
-              itemBuilder: (context, index) {
-                return VideoItem();
-              },
-            ),
+          FutureBuilder(
+            future: _homeScreenState.getRecentVideos(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(child: CircularProgressIndicator());
+              } else if (snapshot.hasError) {
+                return Center(child: Text('Error: ${snapshot.error}'));
+              } else {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: ListView.builder(
+                    physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: _homeScreenState.recentVideos.length,
+                    itemBuilder: (context, index) {
+                      return VideoItem(
+                        videoModel: _homeScreenState.recentVideos[index],
+                      );
+                    },
+                  ),
+                );
+              }
+            },
           ),
         ],
       ),

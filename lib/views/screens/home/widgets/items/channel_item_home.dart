@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_stream_mobile/core/models/channel_model.dart';
 import 'package:flutter_stream_mobile/util/stylish/app_colors.dart';
 import 'package:flutter_stream_mobile/views/widgets/image_widget.dart';
 import 'package:flutter_stream_mobile/views/widgets/rounded_shape.dart';
 
 class ChannelItemHome extends StatelessWidget {
-  const ChannelItemHome({super.key});
+  final ChannelModel channelModel;
+  const ChannelItemHome({super.key, required this.channelModel});
 
   @override
   Widget build(BuildContext context) {
@@ -25,9 +27,7 @@ class ChannelItemHome extends StatelessWidget {
                   height: double.infinity,
                   child: ClipRRect(
                       borderRadius: BorderRadius.circular(15),
-                      child: UrlImageWidget(
-                          imageUrl:
-                              'https://assets-jpcust.jwpsrv.com/thumbnails/2vmJrkxT-320.jpg')),
+                      child: UrlImageWidget(imageUrl: channelModel.image)),
                 ),
               ),
               Positioned(
