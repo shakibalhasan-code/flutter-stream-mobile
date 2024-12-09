@@ -11,9 +11,19 @@ import 'package:flutter_stream_mobile/views/widgets/items/video_item.dart';
 import 'package:get/get.dart';
 import 'package:hugeicons/hugeicons.dart';
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+class HomeScreen extends StatefulWidget {
+  final VoidCallback? allCategoryClicked, allChannelClicked, allVideo;
+  const HomeScreen(
+      {super.key,
+      this.allCategoryClicked,
+      this.allChannelClicked,
+      this.allVideo});
 
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final HomeScreenState _homeScreenState = Get.put(HomeScreenState());
@@ -49,7 +59,11 @@ class HomeScreen extends StatelessWidget {
             context,
             icon: HugeIcons.strokeRoundedCatalogue,
             title: 'Categories',
-            onPressed: () {},
+            onPressed: () {
+              setState(() {
+                widget.allCategoryClicked!.call();
+              });
+            },
           ),
           FutureBuilder(
             future: _homeScreenState.getAllCategories(),
@@ -79,7 +93,11 @@ class HomeScreen extends StatelessWidget {
             context,
             icon: HugeIcons.strokeRoundedTv01,
             title: 'Recent Channels',
-            onPressed: () {},
+            onPressed: () {
+              setState(() {
+                widget.allChannelClicked!.call();
+              });
+            },
           ),
           FutureBuilder(
             future: _homeScreenState.getAllChannels(),
@@ -108,7 +126,11 @@ class HomeScreen extends StatelessWidget {
             context,
             icon: HugeIcons.strokeRoundedVideo01,
             title: 'Recent Videos',
-            onPressed: () {},
+            onPressed: () {
+              setState(() {
+                widget.allVideo!.call();
+              });
+            },
           ),
           FutureBuilder(
             future: _homeScreenState.getRecentVideos(),

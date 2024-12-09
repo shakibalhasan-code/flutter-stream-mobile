@@ -19,18 +19,34 @@ class TabScreen extends StatefulWidget {
 }
 
 class _TabScreenState extends State<TabScreen> {
-  final List<Widget> bodyContent = [
-    const HomeScreen(),
-    const VideoScreen(),
-    const CategoriesScreen(),
-    const LiveTvScreen(),
-    SettingsScreen()
-  ];
   int selectedIndex = 0;
+
+  void changeTabIndex(int index) {
+    setState(() {
+      selectedIndex = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    final List<Widget> bodyContent = [
+      HomeScreen(
+        allCategoryClicked: () {
+          changeTabIndex(2); // Navigates to Categories tab
+        },
+        allChannelClicked: () {
+          changeTabIndex(3);
+        },
+        allVideo: () {
+          changeTabIndex(1);
+        },
+      ),
+      const VideoScreen(),
+      const CategoriesScreen(),
+      const LiveTvScreen(),
+      const SettingsScreen()
+    ];
     return Scaffold(
       appBar: AppBar(
         elevation: 3,
@@ -61,9 +77,7 @@ class _TabScreenState extends State<TabScreen> {
         unselectedItemColor: Colors.grey.withOpacity(0.5),
         currentIndex: selectedIndex,
         onTap: (i) {
-          setState(() {
-            selectedIndex = i;
-          });
+          changeTabIndex(i);
         },
         items: const [
           BottomNavigationBarItem(

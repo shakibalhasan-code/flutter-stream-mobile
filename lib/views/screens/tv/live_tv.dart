@@ -19,8 +19,8 @@ class LiveTvScreen extends StatelessWidget {
                 return const Center(
                   child: CircularProgressIndicator(),
                 );
-              } else if (!snapshot.hasData) {
-                return Center(
+              } else if (snapshot.hasError) {
+                return const Center(
                   child: Text('no channel found..!'),
                 );
               } else {
