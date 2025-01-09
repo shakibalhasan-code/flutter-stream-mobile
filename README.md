@@ -1,6 +1,9 @@
-# flutter_stream_mobile
+# Flutter Stream Mobile
 
 A new Flutter project.
+
+![Cover Image](https://raw.githubusercontent.com/shakibalhasan-code/my_portfolio/refs/heads/master/flutter_stream.png)
+
 
 ## Getting Started
 
